@@ -1,0 +1,31 @@
+span.hljs {
+  display: unset;
+  overflow: unset;
+  padding: unset;
+  font: unset;
+  background: unset;
+  border: unset;
+  border-radius: unset;
+  margin: unset;
+}
+
+pre.hljs.linenums {
+  color: #999;
+}
+
+li.L0:not(.highlight):not(.highlight-dark),
+li.L1:not(.highlight):not(.highlight-dark),
+li.L2:not(.highlight):not(.highlight-dark),
+li.L3:not(.highlight):not(.highlight-dark),
+li.L4:not(.highlight):not(.highlight-dark),
+li.L5:not(.highlight):not(.highlight-dark),
+li.L6:not(.highlight):not(.highlight-dark),
+li.L7:not(.highlight):not(.highlight-dark),
+li.L8:not(.highlight):not(.highlight-dark),
+li.L9:not(.highlight):not(.highlight-dark) {
+  background-color: unset;
+}
+
+.prettyprint {
+  font-family: Menlo, "Bitstream Vera Sans Mono", "DejaVu Sans Mono", Monaco, Consolas, monospace;
+}

@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "name": "gitbucket-code-highlighter-plugin",
+  "scripts": {
+    "build": "sbt assembly",
+    "copy": "sbt install",
+    "lint": "npx eslint src",
+    "generate": "npm run generate:theme-list & npm run generate:lang-map",
+    "generate:theme-list": "npx ts-node --project ./src/tools/generators/tsconfig.json ./src/tools/generators/generate-theme-list.ts > ./src/main/typescript/modules/generated/hljs-theme-list.ts",
+    "generate:lang-map": "npx ts-node --project ./src/tools/generators/tsconfig.json ./src/tools/generators/generate-lang-alias-map.ts > ./src/main/typescript/modules/generated/hljs-lang-alias-map.ts"
+  },
+  "dependencies": {
+    "@highlightjs/cdn-assets": "^10.6.0",
+    "highlight.js": "^10.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.35",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "eslint": "^7.22.0",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
+  }
+}
