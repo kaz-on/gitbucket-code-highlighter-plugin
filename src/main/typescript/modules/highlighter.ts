@@ -31,12 +31,13 @@ function getRecordValue<K extends PropertyKey, V>(record: Record<K, V>, key: K):
   return getRecordValueOr(record, key, undefined);
 }
 
-function getFileName(url: string): string | undefined {
-  return url.match(/\/([^/]+)$/)?.[1];
+function getFileName(url: string): string {
+  return url.substring(url.lastIndexOf('/') + 1);
 }
 
-function getFileExtension(url: string): string | undefined {
-  return url.match(/\.([^./]+)$/)?.[1];
+function getFileExtension(fileName: string): string {
+  const pos = fileName.lastIndexOf('.');
+  return (pos < 0) ? '' : fileName.substring(pos + 1);
 }
 
 function removeThePrefix(text: string, prefix: string): string {
@@ -134,8 +135,8 @@ function splitHtmlTagsLineByLine(html: string): string[] {
 class Language {
   readonly id: string | string[] | undefined;
 
-  constructor(langName?: string, fileName?: string) {
-    this.id = Language.getId(langName, fileName);
+  constructor(langName?: string, fileNameOrUrl?: string) {
+    this.id = Language.getId(langName, fileNameOrUrl);
     this.apply(id =>
       console.info(`Code Highlighter: Detected language ID '${id}'`)
     );
@@ -154,9 +155,12 @@ class Language {
     }
   }
 
-  private static getId(langName: string | undefined, fileName: string | undefined): string | string[] | undefined {
+  private static getId(langName: string | undefined, fileNameOrUrl: string | undefined): string | string[] | undefined {
     const useFileName = prioritizeFileName || !langName;
-    if(useFileName && fileName) {
+
+    if(useFileName && fileNameOrUrl) {
+      let fileName = getFileName(fileNameOrUrl);
+
       console.info(`Code Highlighter: Detected file name '${fileName}'`)
 
       fileName = fileName.toLowerCase();
@@ -303,7 +307,7 @@ function detectLanguage(elem: HTMLElement): string | undefined {
   return elem.className.match(/\blang(?:uage)?-([^\s:]+)/)?.[1];
 }
 
-function detectFileName(elem: HTMLElement): string | undefined {
+function detectFileNameOrUrl(elem: HTMLElement): string | undefined {
   // Get the filename from the class name
   // * This behavior is currently disabled
   //const match = elem.className.match(/\blang(?:uage)?-[^\s:]*:(\S+)/);
@@ -312,21 +316,21 @@ function detectFileName(elem: HTMLElement): string | undefined {
   //}
 
   // Get the filename from dataset
-  const fileName = elem.dataset['fileName'];
-  if(fileName) {
-    return fileName;
+  const fileNameOrUrl = elem.dataset['filename'] ?? elem.dataset['fileName'];
+  if(fileNameOrUrl) {
+    return fileNameOrUrl;
   }
 
   // In the blob view, get the filename from the pathname
   if(elem.classList.contains('blob')) {
-    return getFileName(location.pathname);
+    return location.pathname;
   }
 
   return; // undefined
 }
 
 function detectLanguageId(elem: HTMLElement): Language {
-  return new Language(detectLanguage(elem), detectFileName(elem));
+  return new Language(detectLanguage(elem), detectFileNameOrUrl(elem));
 }
 
 
