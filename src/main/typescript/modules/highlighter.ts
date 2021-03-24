@@ -92,7 +92,7 @@ function splitHtmlTagsLineByLine(html: string): string[] {
   const lines: string[] = [];
 
   const re = new RegExp(/<\s*(?:(\/)\s*)?(\w+)[^>]*>|\n|\r\n?/g);
-  let match: RegExpExecArray | null;
+  let match;
 
   while((match = re.exec(html))) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
