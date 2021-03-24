@@ -1,11 +1,27 @@
 # gitbucket-code-highlighter-plugin
 
-This is a [gitbucket](https://github.com/gitbucket/gitbucket) plugin that enhances code syntax highlighting with [highlight.js](https://github.com/highlightjs/highlight.js).
+This is a [GitBucket](https://gitbucket.github.io/) plugin that enhances code syntax highlighting with [highlight.js](https://highlightjs.org/).
+
+
+## Features
+
+* Code syntax highlighting with automatic language detection using highlight.js.
+* Language detection from file name in blob view.
+* (GitBucket 4.35.0 or later) All themes included in highlight.js can be selected in account settings.  
+  ⚠️ The following themes will become unavailable after installing this plugin.
+  - `Hemisu Dark`, `Hemisu Light`, `Vibrant Ink`
 
 
 ## Installation
 
 Download jar file from the [Releases page](https://github.com/kaz-on/gitbucket-code-highlighter-plugin/releases) and put into `GITBUCKET_HOME/plugins`.
+
+
+## Operating requirements
+
+* GitBucket 4.32.0 or later.
+* Web browsers that support ES2016 features.  
+  The latest version of Chrome or Firefox is recommended.
 
 
 ## Build from source
