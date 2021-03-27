@@ -251,7 +251,11 @@ function hljsHighlight(code: string, lang: Language): string {
       type = 'Auto-highlighted';
     }
     else {
-      result = hljs.highlight(lang.id, code, true);
+      const option: HighlightOptions = {
+        language: lang.id,
+        ignoreIllegals: true
+      };
+      result = hljs.highlight(code, option);
       type = 'Highlighted';
     }
     const langName = result.language ?? 'plaintext';
