@@ -44,5 +44,18 @@ Compile / resourceGenerators += Def.task {
   finder.get
 }.taskValue
 
-// Add '@highlightjs/cdn-assets' to the unmanaged resource
-Compile / unmanagedResourceDirectories += baseDirectory.value / "node_modules" / "@highlightjs"
+// Add '@highlightjs/cdn-assets' to resources
+Compile / resourceGenerators += Def.task {
+  // Source directory
+  val sourceDir: File = baseDirectory.value / "node_modules" / "@highlightjs" / "cdn-assets"
+
+  // Output directory
+  val outDir: File = (Compile / resourceManaged).value / "cdn-assets"
+
+  // Copy highlight.js cdn-assets
+  IO. copyDirectory(sourceDir, outDir, true)
+
+  // List all files in 'outDir'
+  val finder: PathFinder = (outDir ** "*") filter { _.isFile }
+  finder.get
+}.taskValue
