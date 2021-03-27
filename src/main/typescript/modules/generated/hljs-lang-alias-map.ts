@@ -170,6 +170,7 @@ export const hljsLangAliasMap: Record<string, string | string[]> = {
   "julia-repl": "julia-repl",
   "kotlin": "kotlin",
   "kt": "kotlin",
+  "kts": "kotlin",
   "lasso": "lasso",
   "lassoscript": "lasso",
   "ls": [
@@ -337,6 +338,7 @@ export const hljsLangAliasMap: Record<string, string | string[]> = {
   "craftcms": "twig",
   "typescript": "typescript",
   "ts": "typescript",
+  "tsx": "typescript",
   "vala": "vala",
   "vbnet": "vbnet",
   "vb": "vbnet",
