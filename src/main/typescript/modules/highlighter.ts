@@ -114,7 +114,7 @@ function splitHtmlTagsLineByLine(html: string): string[] {
     else {
       // End of the line
       lines.push(unclosedTags + html.substring(index, match.index) + closingTags.join(''));
-      index = match.index + 1;
+      index = re.lastIndex;
       unclosedTags = openedTags.join('');
     }
   }
@@ -246,7 +246,7 @@ function hljsHighlight(code: string, lang: Language): string {
   try {
     let result;
     let type;
-    if(lang.id == undefined || Array.isArray(lang.id)) {
+    if(lang.id === undefined || Array.isArray(lang.id)) {
       result = hljs.highlightAuto(code, lang.id);
       type = 'Auto-highlighted';
     }
