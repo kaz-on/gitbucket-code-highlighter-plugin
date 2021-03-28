@@ -9,7 +9,8 @@ class Plugin extends gitbucket.core.plugin.Plugin {
   override val description: String = "Enhance code syntax highlighting with highlight.js"
   override val versions: List[Version] = List(
     new Version("1.0.0"),
-    new Version("1.0.1")
+    new Version("1.0.1"),
+    new Version("1.1.0")
   )
 
   override val assetsMappings = Seq(
