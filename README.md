@@ -2,10 +2,13 @@
 
 This is a [GitBucket](https://gitbucket.github.io/) plugin that enhances code syntax highlighting with [highlight.js](https://highlightjs.org/).
 
+![highlighting](screenshots/highlighting.png)
+
 
 ## Features
 
 * Code syntax highlighting with automatic language detection using [highlight.js](https://highlightjs.org/).  
+  All languages supported by highlight.js are available.  
   Check out the [highlight.js demo](https://highlightjs.org/static/demo/) page.
 * Language detection from file name in blob view.
 * (GitBucket 4.35.0 or later) All themes included in highlight.js can be selected in the account settings.  
@@ -20,8 +23,8 @@ Download jar file from the [Releases page](https://github.com/kaz-on/gitbucket-c
 
 ## Operating requirements
 
-* GitBucket 4.32.0 or later.
-* Web browsers that support ES2016 features.  
+* GitBucket 4.32.0 or later
+* Web browsers that support ES2016 features  
   The latest version of Chrome or Firefox is recommended.
 
 
