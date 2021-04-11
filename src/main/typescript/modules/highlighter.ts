@@ -270,7 +270,7 @@ function hljsHighlight(code: string, lang: Language): string {
   }
 }
 
-function doHighlightPostProcess(code: string, lineNum: LineNumber): string {
+function addHighlightRelatedTags(code: string, lineNum: LineNumber): string {
   // Wrapping the code in 'hljs' class
   code = `<span class="hljs">${code}</span>`;
 
@@ -298,7 +298,7 @@ function doHighlight(code: string, lang: Language, lineNum: LineNumber): string 
   // Apply highlighting
   code = hljsHighlight(code, lang);
 
-  return doHighlightPostProcess(code, lineNum);
+  return addHighlightRelatedTags(code, lineNum);
 }
 
 
@@ -360,7 +360,7 @@ function highlightElement(elem: HTMLElement): void {
   const isSearchResults = document.querySelector('form input[type="submit"][value="Search"]');
   if(isSearchResults) {
     // If it is a search results page, do not highlight and keep HTML tags
-    elem.innerHTML = doHighlightPostProcess(elem.innerHTML, detectLineNumber(elem));
+    elem.innerHTML = addHighlightRelatedTags(elem.innerHTML, detectLineNumber(elem));
   }
   else {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
