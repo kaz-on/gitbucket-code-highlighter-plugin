@@ -23,20 +23,14 @@ def ExecCommand(command: Seq[String], builder: (Seq[String]) => Seq[String], log
 
 // Compile TypeScript sources
 Compile / resourceGenerators += Def.task {
-  // Lint
-  ExecCommand(Seq("eslint", "src"), BuildNpmCommand, streams.value.log)
-
-  // Source directory
-  val sourceDir: File = (Compile / sourceDirectory).value / "typescript"
-
   // Output directory
   val outDir: File = (Compile / resourceManaged).value / "assets"
 
   // Need to delete the output directory first
   IO.delete(outDir)
 
-  // Run tsc
-  val command = Seq("tsc", "--project", sourceDir.getPath, "--outDir", outDir.getPath)
+  // Run webpack
+  val command = Seq("webpack", "--output-path", outDir.getPath)
   ExecCommand(command, BuildNpmCommand, streams.value.log)
 
   // List all files in 'outDir'

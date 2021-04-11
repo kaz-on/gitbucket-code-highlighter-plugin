@@ -25,7 +25,7 @@ class Plugin extends gitbucket.core.plugin.Plugin {
       |codeHighlighterAssetsPath = "${assetsPath}";
       |</script>
       |<script src="${assetsPath}/highlightjs/highlight.min.js" defer></script>
-      |<script src="${assetsPath}/entry.js" type="module"></script>
+      |<script src="${assetsPath}/main.js" defer></script>
       |<script>""".stripMargin)
   }
 }

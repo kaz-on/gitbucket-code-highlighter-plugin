@@ -1,4 +1,4 @@
-import {hljsThemeList} from './generated/hljs-theme-list.js';
+import {hljsThemeList} from './generated/hljs-theme-list';
 
 
 // Global variables

@@ -1,5 +1,5 @@
-import {initializeTheme} from './modules/theme-loader.js';
-import {initializeHighlighting} from './modules/highlighter.js';
+import {initializeTheme} from './modules/theme-loader';
+import {initializeHighlighting} from './modules/highlighter';
 
 
 //

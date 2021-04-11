@@ -1,5 +1,5 @@
-import {hljsLangAliasMap, hljsSubLangMap} from './generated/hljs-lang-alias-map.js';
-import {fileNameMap, langNameMap} from './language-map.js';
+import {hljsLangAliasMap, hljsSubLangMap} from './generated/hljs-lang-alias-map';
+import {fileNameMap, langNameMap} from './language-map';
 
 
 // Global flags
