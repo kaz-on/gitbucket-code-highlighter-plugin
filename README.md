@@ -1,13 +1,13 @@
 # GitBucket Code Highlighter Plugin
 
-This is a [GitBucket](https://gitbucket.github.io/) plugin that enhances code syntax highlighting with [highlight.js](https://highlightjs.org/).
+This is a [GitBucket](https://gitbucket.github.io/) plugin that enhances code syntax highlighting using [highlight.js](https://highlightjs.org/).
 
 ![highlighting](screenshots/highlighting.png)
 
 
 ## Features
 
-* Code syntax highlighting with automatic language detection using [highlight.js](https://highlightjs.org/).  
+* Code syntax highlighting with automatic language detection support by [highlight.js](https://highlightjs.org/).  
   All languages supported by highlight.js are available.  
   Check out the [highlight.js demo](https://highlightjs.org/static/demo/) page.
 * Language detection from file name in blob view.

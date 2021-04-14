@@ -7,7 +7,7 @@
 
 ## 特徴
 
-* [highlight.js](https://highlightjs.org/) による自動言語検出付きのコード構文強調表示。  
+* [highlight.js](https://highlightjs.org/) によるコード構文強調表示。(自動言語検出対応)  
   highlight.js が対応する全ての言語が利用できます。  
   対応言語は [highlight.js のデモページ](https://highlightjs.org/static/demo/) をご覧ください。
 * blob 表示ではファイル名から言語検出を行います。
