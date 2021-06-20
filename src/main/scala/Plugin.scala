@@ -11,7 +11,8 @@ class Plugin extends gitbucket.core.plugin.Plugin {
     new Version("1.0.0"),
     new Version("1.0.1"),
     new Version("1.1.0"),
-    new Version("1.1.1")
+    new Version("1.1.1"),
+    new Version("1.2.0")
   )
 
   override val assetsMappings = Seq(
