@@ -3,7 +3,7 @@
 //
 
 
-import hljs = require('highlight.js');
+import hljs from 'highlight.js';
 
 
 class LanguageAliasMap {
@@ -28,16 +28,6 @@ class LanguageAliasMap {
   }
 
   private addLanguageAliases(langId: string): void {
-    // 'c-like' is deprecated
-    if(langId === 'c-like') {
-      return;
-    }
-
-    // Do not use 'htmlbars', use 'handlebars'
-    if(langId === 'htmlbars') {
-      return;
-    }
-
     const langObj = hljs.getLanguage(langId);
     if(!langObj) {
       return;

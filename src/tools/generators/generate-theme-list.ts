@@ -12,24 +12,28 @@ class FileList {
 
   constructor(dirPath: string, filterRegExp?: RegExp) {
     this.files = [];
-    this.listFiles(dirPath, filterRegExp);
+    this.listFiles(dirPath, '', filterRegExp);
+    this.files.sort();
   }
 
   toString(): string {
     return JSON.stringify(this.files, null, 2);
   }
 
-  private listFiles(dirPath: string, filterRegExp: RegExp | undefined): void {
+  private listFiles(dirPath: string, subPath: string, filterRegExp: RegExp | undefined): void {
     const dirents = fs.readdirSync(dirPath, {withFileTypes: true});
     for(const dirent of dirents) {
       if(dirent.isFile()) {
         const fileName = FileList.filterFile(dirent.name, filterRegExp);
         if(fileName) {
-          this.files.push(fileName);
+          this.files.push(subPath + fileName);
         }
       }
+      if(dirent.isDirectory()) {
+        const subDir = subPath + dirent.name + '/';
+        this.listFiles(dirPath + subDir, subDir, filterRegExp);
+      }
     }
-    this.files.sort();
   }
 
   private static filterFile(fileName: string, filterRegExp: RegExp | undefined): string | undefined {
@@ -48,7 +52,7 @@ class FileList {
 
 
 const hljsCdnAssets = require.resolve('@highlightjs/cdn-assets/highlight.js');
-const themePath = path.dirname(hljsCdnAssets) + '/styles';
+const themePath = path.dirname(hljsCdnAssets) + '/styles/';
 const themeFiles = new FileList(themePath, /^(.+?)\.min\.css$/);
 
 // Output TypeScript code

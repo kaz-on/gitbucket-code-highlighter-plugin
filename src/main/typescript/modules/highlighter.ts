@@ -13,6 +13,11 @@ const autoDetectWhenUnknownLanguage = true; // Auto-detection when unknown langu
 declare const codeHighlighterAssetsPath: string;
 
 
+// highlight.js
+import {HLJSApi, HighlightOptions} from 'highlight.js'
+declare const hljs : HLJSApi;
+
+
 // google-code-prettify functions
 declare let prettyPrintOne: (sourceCodeHtml: string, opt_langExtension?: string, opt_numberLines?: number | boolean) => string;
 declare let prettyPrint: (opt_whenDone?: () => void, opt_root?: HTMLElement | HTMLDocument) => void;

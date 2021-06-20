@@ -2,7 +2,7 @@ import {hljsThemeList} from './generated/hljs-theme-list';
 
 
 // Global variables
-const defaultThemeHLjs = 'github-gist'; // Default theme of highlight.js
+const defaultThemeHLjs = 'github'; // Default theme of highlight.js
 const defaultThemeGCP = 'github-v2'; // Default theme of google-code-prettify
 
 
@@ -86,7 +86,7 @@ function initializeThemeSelector(pageTheme: PageTheme): void {
     const optionElem = document.createElement('option');
     optionElem.value = (hljsTheme === defaultThemeHLjs) ? defaultThemeGCP : hljsTheme;
     optionElem.text = 'highlight.js :' +
-      hljsTheme.replace(/(?:^|-)(.)/g, (_, lead: string) => ' ' + lead.toUpperCase());
+      hljsTheme.replace(/(?:^|[-/])(.)/g, (_, lead: string) => ' ' + lead.toUpperCase());
     optionElem.selected = (hljsTheme === pageTheme.name);
     selectElem.appendChild(optionElem);
   }

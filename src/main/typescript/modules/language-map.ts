@@ -6,8 +6,10 @@ export const fileNameMap: Record<string, string> = {
   "copying": "plaintext",
   "dockerfile": "dockerfile",
   "gemfile": "ruby",
+  "httpd.conf": "apache",
   "license": "plaintext",
   "makefile": "makefile",
+  "nginx.conf": "nginx",
   "rakefile": "ruby",
   "readme": "plaintext"
 };
