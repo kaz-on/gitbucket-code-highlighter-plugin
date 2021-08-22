@@ -24,7 +24,7 @@ class Plugin extends gitbucket.core.plugin.Plugin {
     val basePath = settings.baseUrl.getOrElse(context.getContextPath)
     val assetsPath = basePath + "/plugin-assets/code-highlighter"
     Seq(".*" -> s"""
-      |codeHighlighterAssetsPath = "${assetsPath}";
+      |var codeHighlighterAssetsPath = "${assetsPath}";
       |</script>
       |<script src="${assetsPath}/highlightjs/highlight.min.js" defer></script>
       |<script src="${assetsPath}/main.js" defer></script>

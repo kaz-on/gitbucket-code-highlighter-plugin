@@ -96,7 +96,7 @@ function splitHtmlTagsLineByLine(html: string): string[] {
   let unclosedTags = '';
   const lines: string[] = [];
 
-  const re = new RegExp(/<\s*(?:(\/)\s*)?(\w+)[^>]*>|\n|\r\n?/g);
+  const re = new RegExp(/<\/?(\w+)[^>]*>|\n|\r\n?/g);
   let match;
 
   while((match = re.exec(html))) {
@@ -104,7 +104,7 @@ function splitHtmlTagsLineByLine(html: string): string[] {
     const matched = match[0]!; // 'match[0]' is always defined
 
     if(matched.charAt(0) === '<') {
-      if(match[1] === '/') {
+      if(matched.charAt(1) === '/') {
         // Closing tag
         console.assert(closingTags.length > 0, 'splitHtmlTagsLineByLine: Too many closing tags');
         openedTags.pop();
@@ -113,7 +113,7 @@ function splitHtmlTagsLineByLine(html: string): string[] {
       else {
         // Opening tag
         openedTags.push(matched);
-        closingTags.unshift(`</${match[2]}>`);
+        closingTags.unshift(`</${match[1]}>`);
       }
     }
     else {
@@ -294,7 +294,7 @@ function addHighlightRelatedTags(code: string, lineNum: LineNumber, avoidSpan?: 
 
   // Add 'ol' and 'li' tags (Imitate google-code-prettify)
 
-  code = lines.map(function(codeLine, index) {
+  code = lines.map( (codeLine, index) => {
     let lineValue = '';
     if(lineNum.start !== 1 && index === 0) {
       lineValue = `value="${lineNum.start}"`;

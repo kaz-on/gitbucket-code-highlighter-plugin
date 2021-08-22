@@ -22,6 +22,7 @@ function addCssLink(url: string): void {
 
   // Insert a link element before the style element in the document head
   // When there is no style element in the head, it is inserted at the end of the head
+  // This enables overrides with user-defined CSS
   const styleElem = document.head.querySelector<HTMLStyleElement>('style[type="text/css"]');
   document.head.insertBefore(linkElem, styleElem);
 }

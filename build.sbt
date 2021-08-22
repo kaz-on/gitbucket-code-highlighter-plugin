@@ -50,7 +50,7 @@ Compile / resourceGenerators += Def.task {
   IO.delete(outDir)
 
   // Copy highlight.js cdn-assets
-  IO. copyDirectory(sourceDir, outDir)
+  IO.copyDirectory(sourceDir, outDir)
 
   // List all files in 'outDir'
   val finder: PathFinder = (outDir ** "*") filter { _.isFile }
