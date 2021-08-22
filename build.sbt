@@ -1,6 +1,6 @@
 name := "gitbucket-code-highlighter-plugin"
 organization := "io.github.gitbucket"
-version := "1.2.0"
+version := "1.2.1"
 scalaVersion := "2.13.3"
 gitbucketVersion := "4.35.3"
 
