@@ -9,6 +9,10 @@ span.hljs {
   margin: unset;
 }
 
+span.hljs div {
+  display: inline;
+}
+
 pre.hljs.linenums {
   color: #999;
 }

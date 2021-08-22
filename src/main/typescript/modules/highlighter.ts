@@ -275,7 +275,13 @@ function hljsHighlight(code: string, lang: Language): string {
   }
 }
 
-function addHighlightRelatedTags(code: string, lineNum: LineNumber): string {
+function addHighlightRelatedTags(code: string, lineNum: LineNumber, avoidSpan?: boolean): string {
+  if(avoidSpan) {
+    // Replace 'span' tags with 'div' tags because GitBucket doesn't like
+    // nested 'span' tags when processing code comments in the diff view
+    code = code.replace(/<(\/?)span\b/g, '<$1div');
+  }
+
   // Wrapping the code in 'hljs' class
   code = `<span class="hljs">${code}</span>`;
 
@@ -299,11 +305,11 @@ function addHighlightRelatedTags(code: string, lineNum: LineNumber): string {
   return `<ol class="linenums">${code}</ol>`;
 }
 
-function doHighlight(code: string, lang: Language, lineNum: LineNumber): string {
+function doHighlight(code: string, lang: Language, lineNum: LineNumber, avoidSpan?: boolean): string {
   // Apply highlighting
   code = hljsHighlight(code, lang);
 
-  return addHighlightRelatedTags(code, lineNum);
+  return addHighlightRelatedTags(code, lineNum, avoidSpan);
 }
 
 
@@ -395,7 +401,7 @@ function overrideFunctions(): void {
     // Cancel HTML-encoding in gitbucket.js
     sourceCodeHtml = decodeHtml(sourceCodeHtml);
 
-    return doHighlight(sourceCodeHtml, new Language(opt_langExtension), new LineNumber(opt_numberLines));
+    return doHighlight(sourceCodeHtml, new Language(opt_langExtension), new LineNumber(opt_numberLines), true);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
