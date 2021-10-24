@@ -5,6 +5,7 @@
     "build": "sbt assembly",
     "copy": "sbt install",
     "lint": "npx eslint src",
+    "update": "npm ci & npm update & npm run generate & npm run lint",
     "generate": "npm run generate:theme-list & npm run generate:lang-map",
     "generate:theme-list": "npx ts-node --project ./src/tools/generators/tsconfig.json ./src/tools/generators/generate-theme-list.ts > ./src/main/typescript/modules/generated/hljs-theme-list.ts",
     "generate:lang-map": "npx ts-node --project ./src/tools/generators/tsconfig.json ./src/tools/generators/generate-lang-alias-map.ts > ./src/main/typescript/modules/generated/hljs-lang-alias-map.ts"
