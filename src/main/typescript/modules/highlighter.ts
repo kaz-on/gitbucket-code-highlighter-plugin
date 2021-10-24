@@ -138,10 +138,10 @@ function splitHtmlTagsLineByLine(html: string): string[] {
 //
 
 class Language {
-  readonly id: string | string[] | undefined;
+  readonly id: string | string[];
 
-  constructor(langName?: string, fileNameOrUrl?: string) {
-    this.id = Language.getId(langName, fileNameOrUrl);
+  constructor(code:string, langName?: string, fileNameOrUrl?: string) {
+    this.id = Language.getId(code, langName, fileNameOrUrl);
     this.apply(id =>
       console.info(`Code Highlighter: Detected language ID '${id}'`)
     );
@@ -160,7 +160,30 @@ class Language {
     }
   }
 
-  private static getId(langName: string | undefined, fileNameOrUrl: string | undefined): string | string[] | undefined {
+  private static autoDetect(code: string, enable: boolean): string | string[] {
+    // Auto-detection in Hightlight.js often takes a long time,
+    // so use the plugin's own auto-detection
+
+    if(!enable) {
+      return 'plaintext';
+    }
+
+    if(code.startsWith('<')) {
+      return 'xml';
+    }
+
+    if(code.startsWith('{')) {
+      return 'json';
+    }
+
+    return [
+      'bash',
+      'ini',
+      'javascript',
+    ];
+  }
+
+  private static getId(code: string, langName: string | undefined, fileNameOrUrl: string | undefined): string | string[] {
     const useFileName = prioritizeFileName || !langName;
 
     if(useFileName && fileNameOrUrl) {
@@ -171,12 +194,12 @@ class Language {
       fileName = fileName.toLowerCase();
       langName = getRecordValue(fileNameMap, fileName) ?? getFileExtension(fileName);
       if(!langName) {
-        return autoDetectWhenNoExtension ? undefined : 'plaintext';
+        return Language.autoDetect(code, autoDetectWhenNoExtension);
       }
     }
 
     if(!langName) {
-      return autoDetectWhenNoLanguage ? undefined : 'plaintext';
+      return Language.autoDetect(code, autoDetectWhenNoLanguage);
     }
 
     console.info(`Code Highlighter: Detected language name '${langName}'`)
@@ -186,7 +209,7 @@ class Language {
 
     const langId = getRecordValue(hljsLangAliasMap, langName);
     if(!langId) {
-      return autoDetectWhenUnknownLanguage ? undefined : 'plaintext';
+      return Language.autoDetect(code, autoDetectWhenUnknownLanguage);
     }
 
     return langId;
@@ -251,7 +274,7 @@ function hljsHighlight(code: string, lang: Language): string {
   try {
     let result;
     let type;
-    if(lang.id === undefined || Array.isArray(lang.id)) {
+    if(Array.isArray(lang.id)) {
       result = hljs.highlightAuto(code, lang.id);
       type = 'Auto-highlighted';
     }
@@ -344,8 +367,8 @@ function detectFileNameOrUrl(elem: HTMLElement): string | undefined {
   return; // undefined
 }
 
-function detectLanguageId(elem: HTMLElement): Language {
-  return new Language(detectLanguage(elem), detectFileNameOrUrl(elem));
+function detectLanguageId(code: string, elem: HTMLElement): Language {
+  return new Language(code, detectLanguage(elem), detectFileNameOrUrl(elem));
 }
 
 
@@ -376,7 +399,7 @@ function highlightElement(elem: HTMLElement): void {
   else {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const code = elem.textContent!; // 'textContent' of 'Element' is not null
-    elem.innerHTML = doHighlight(code, detectLanguageId(elem), detectLineNumber(elem));
+    elem.innerHTML = doHighlight(code, detectLanguageId(code, elem), detectLineNumber(elem));
   }
   elem.classList.add('prettyprinted', 'hljs'); // Prevent re-highlighting and apply highlight.js themes
 }
@@ -401,7 +424,7 @@ function overrideFunctions(): void {
     // Cancel HTML-encoding in gitbucket.js
     sourceCodeHtml = decodeHtml(sourceCodeHtml);
 
-    return doHighlight(sourceCodeHtml, new Language(opt_langExtension), new LineNumber(opt_numberLines), true);
+    return doHighlight(sourceCodeHtml, new Language(sourceCodeHtml, opt_langExtension), new LineNumber(opt_numberLines), true);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
