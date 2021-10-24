@@ -1,12 +1,5 @@
 span.hljs {
-  display: unset;
-  overflow: unset;
-  padding: unset;
-  font: unset;
   background: unset;
-  border: unset;
-  border-radius: unset;
-  margin: unset;
 }
 
 span.hljs div {
@@ -15,6 +8,11 @@ span.hljs div {
 
 pre.hljs.linenums {
   color: #999;
+}
+
+ol.linenums {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 li.L0:not(.highlight):not(.highlight-dark),
