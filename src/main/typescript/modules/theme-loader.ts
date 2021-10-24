@@ -97,6 +97,10 @@ function initializeThemeSelector(pageTheme: PageTheme): void {
     const selectedTheme = new Theme(this.value);
     selectedTheme.loadTheme();
   });
+
+  // Add language class for better preview
+  const preElem = document.querySelector('pre.prettyprint');
+  preElem?.classList.add('lang-cs');
 }
 
 
