@@ -21,7 +21,7 @@ class FileList {
   }
 
   private listFiles(dirPath: string, subPath: string, filterRegExp: RegExp | undefined): void {
-    const dirents = fs.readdirSync(dirPath, {withFileTypes: true});
+    const dirents = fs.readdirSync(dirPath + subPath, {withFileTypes: true});
     for(const dirent of dirents) {
       if(dirent.isFile()) {
         const fileName = FileList.filterFile(dirent.name, filterRegExp);
@@ -31,7 +31,7 @@ class FileList {
       }
       if(dirent.isDirectory()) {
         const subDir = subPath + dirent.name + '/';
-        this.listFiles(dirPath + subDir, subDir, filterRegExp);
+        this.listFiles(dirPath, subDir, filterRegExp);
       }
     }
   }
