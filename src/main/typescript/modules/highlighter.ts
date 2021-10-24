@@ -36,6 +36,10 @@ function getRecordValue<K extends PropertyKey, V>(record: Record<K, V>, key: K):
   return getRecordValueOr(record, key, undefined);
 }
 
+function getPathName(path: string): string {
+  return new URL(path, location.href).pathname;
+}
+
 function getFileName(url: string): string {
   return url.substring(url.lastIndexOf('/') + 1);
 }
@@ -224,7 +228,8 @@ class Language {
 
     if(!loaded) {
       console.info(`Code Highlighter: Loading language '${langId}'`);
-      loadScriptSync(`${codeHighlighterAssetsPath}/highlightjs/languages/${langId}.min.js`, true);
+      const pathName = getPathName(`${codeHighlighterAssetsPath}/highlightjs/languages/${langId}.min.js`);
+      loadScriptSync(pathName, true);
     }
 
     if(!hljs.getLanguage(langId)) {
