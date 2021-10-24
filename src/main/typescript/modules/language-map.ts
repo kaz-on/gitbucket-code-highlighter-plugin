@@ -10,6 +10,7 @@ export const fileNameMap: Record<string, string> = {
   "license": "plaintext",
   "makefile": "makefile",
   "nginx.conf": "nginx",
+  "pf.conf": "pf",
   "rakefile": "ruby",
   "readme": "plaintext"
 };
@@ -17,6 +18,10 @@ export const fileNameMap: Record<string, string> = {
 // Mapping from language names (file extensions, etc.) to highlight.js language names
 export const langNameMap: Record<string, string> = {
   // Keys and values must not contain any uppercase letters
+  "gitattributes": "plaintext",
+  "gitignore": "plaintext",
+  "hgignore": "plaintext",
+  "npmignore": "plaintext",
   "htm": "html",
   "sbt": "scala",
   "sdc": "tcl",

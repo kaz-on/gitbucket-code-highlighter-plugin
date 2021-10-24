@@ -20,7 +20,7 @@ declare const hljs : HLJSApi;
 
 // google-code-prettify functions
 declare let prettyPrintOne: (sourceCodeHtml: string, opt_langExtension?: string, opt_numberLines?: number | boolean) => string;
-declare let prettyPrint: (opt_whenDone?: () => void, opt_root?: HTMLElement | HTMLDocument) => void;
+declare let prettyPrint: (opt_whenDone?: () => void, opt_root?: HTMLElement | Document) => void;
 
 
 
@@ -366,7 +366,7 @@ function detectFileNameOrUrl(elem: HTMLElement): string | undefined {
 
   // In the blob view, get the filename from the pathname
   if(elem.classList.contains('blob')) {
-    return location.pathname;
+    return decodeURIComponent(location.pathname);
   }
 
   return; // undefined
@@ -409,7 +409,7 @@ function highlightElement(elem: HTMLElement): void {
   elem.classList.add('prettyprinted', 'hljs'); // Prevent re-highlighting and apply highlight.js themes
 }
 
-function highlightCodeBlocks(root: HTMLElement | HTMLDocument): void {
+function highlightCodeBlocks(root: HTMLElement | Document): void {
   const codeBlocks = root.querySelectorAll<HTMLPreElement>('pre.prettyprint:not(.prettyprinted)');
   for(const codeBlock of codeBlocks) {
     highlightElement(codeBlock);
@@ -433,7 +433,7 @@ function overrideFunctions(): void {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  prettyPrint = function(opt_whenDone?: () => void, opt_root?: HTMLElement | HTMLDocument): void {
+  prettyPrint = function(opt_whenDone?: () => void, opt_root?: HTMLElement | Document): void {
     const root = opt_root || document;
     highlightCodeBlocks(root);
 
