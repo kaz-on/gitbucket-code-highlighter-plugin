@@ -27,7 +27,7 @@ Download jar file from the [Releases page](https://github.com/kaz-on/gitbucket-c
 ## Operating requirements
 
 * GitBucket 4.32.0 or later
-* Web browsers that support ES2016 features  
+* Web browsers that support ES2018 features  
   The latest version of Chrome, Edge or Firefox is recommended.
 
 
