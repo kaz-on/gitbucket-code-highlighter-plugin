@@ -6,10 +6,6 @@ const defaultThemeHLjs = 'github'; // Default theme of highlight.js
 const defaultThemeGCP = 'github-v2'; // Default theme of google-code-prettify
 
 
-// External variable
-declare const codeHighlighterAssetsPath: string;
-
-
 //
 // Dynamic CSS Loader
 //
