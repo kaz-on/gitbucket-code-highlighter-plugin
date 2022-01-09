@@ -56,7 +56,7 @@ class Theme {
   }
 
   loadTheme(): void {
-    changeCssLink(`${codeHighlighterAssetsPath}/highlightjs/styles/`, `${this.name}.min.css`);
+    changeCssLink(`${codeHighlighterHljsPath}/styles/`, `${this.name}.min.css`);
   }
 }
 

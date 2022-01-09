@@ -217,7 +217,7 @@ class Language {
 
     if(!loaded) {
       console.info(`Code Highlighter: Loading language '${langId}'`);
-      const pathName = getPathName(`${codeHighlighterAssetsPath}/highlightjs/languages/${langId}.min.js`);
+      const pathName = getPathName(`${codeHighlighterHljsPath}/languages/${langId}.min.js`);
       loadScriptSync(pathName, true);
     }
 

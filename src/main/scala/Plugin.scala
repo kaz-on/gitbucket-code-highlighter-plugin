@@ -25,10 +25,11 @@ class Plugin extends gitbucket.core.plugin.Plugin {
   override def javaScripts(registry: PluginRegistry, context: ServletContext, settings: SystemSettings): Seq[(String, String)] = {
     val basePath = settings.baseUrl.getOrElse(context.getContextPath)
     val assetsPath = basePath + "/plugin-assets/code-highlighter"
+    val hljsPath = assetsPath + "/highlightjs"
     Seq(".*" -> s"""
-      |const codeHighlighterAssetsPath = "${assetsPath}";
+      |const codeHighlighterHljsPath = "${hljsPath}";
       |</script>
-      |<script src="${assetsPath}/highlightjs/highlight.min.js" defer></script>
+      |<script src="${hljsPath}/highlight.min.js" defer></script>
       |<script src="${assetsPath}/main.js" defer></script>
       |<script>""".stripMargin)
   }

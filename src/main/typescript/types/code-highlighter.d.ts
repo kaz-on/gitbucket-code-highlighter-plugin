@@ -1,2 +1,2 @@
 // External variable
-declare const codeHighlighterAssetsPath: string;
+declare const codeHighlighterHljsPath: string;
