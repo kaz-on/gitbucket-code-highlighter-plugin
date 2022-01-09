@@ -29,7 +29,6 @@ class Plugin extends gitbucket.core.plugin.Plugin {
     Seq(".*" -> s"""
       |const codeHighlighterHljsPath = "${hljsPath}";
       |</script>
-      |<script src="${hljsPath}/highlight.min.js" defer></script>
       |<script src="${assetsPath}/main.js" defer></script>
       |<script>""".stripMargin)
   }

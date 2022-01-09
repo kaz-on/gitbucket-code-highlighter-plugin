@@ -10,8 +10,7 @@ const autoDetectWhenUnknownLanguage = true; // Auto-detection when unknown langu
 
 
 // highlight.js
-import {HLJSApi, HighlightOptions} from 'highlight.js'
-declare const hljs : HLJSApi;
+import hljs from 'highlight.js/lib/core';
 
 
 
@@ -53,28 +52,17 @@ function decodeHtml(html: string): string {
 
 
 //
-// Dynamic Synchronous Script Loader
+// Dynamic Synchronous Highlight.js Language Loader
 //
 
-function execScriptSync(code: string, strict: boolean): void {
-  if(strict) {
-    Function('"use strict";' + code)();
-  }
-  else {
-    const script = document.createElement('script');
-    script.text = code;
-    document.body.appendChild(script);
-    // Script code is executed here immediately
-    document.body.removeChild(script);
-  }
-}
+function loadHljsLanguageSync(langId: string): void {
+  const pathName = getPathName(`${codeHighlighterHljsPath}/languages/${langId}.min.js`);
 
-function loadScriptSync(url: string, strict: boolean): void {
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', url, false);
+  xhr.open('GET', pathName, false);
   xhr.send();
   if(xhr.readyState === xhr.DONE && xhr.status === 200) {
-    execScriptSync(xhr.responseText, strict);
+    Function('hljs', '"use strict";' + xhr.responseText)(hljs);
   }
 }
 
@@ -217,8 +205,7 @@ class Language {
 
     if(!loaded) {
       console.info(`Code Highlighter: Loading language '${langId}'`);
-      const pathName = getPathName(`${codeHighlighterHljsPath}/languages/${langId}.min.js`);
-      loadScriptSync(pathName, true);
+      loadHljsLanguageSync(langId);
     }
 
     if(!hljs.getLanguage(langId)) {
@@ -273,11 +260,10 @@ function hljsHighlight(code: string, lang: Language): string {
       type = 'Auto-highlighted';
     }
     else {
-      const option: HighlightOptions = {
+      result = hljs.highlight(code, {
         language: lang.id,
         ignoreIllegals: true
-      };
-      result = hljs.highlight(code, option);
+      });
       type = 'Highlighted';
     }
     const langName = result.language ?? 'plaintext';
