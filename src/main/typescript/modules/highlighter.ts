@@ -132,7 +132,7 @@ class Language {
 
   loadLanguage(): void {
     this.apply(id =>
-      Language.loadLanguageWithSubLang(id, true)
+      Language.loadLanguageWithSubLang(id)
     );
   }
 
@@ -196,17 +196,13 @@ class Language {
     return langId;
   }
 
-  private static loadLanguageWithSubLang(langId: string, forceLoadSubLang: boolean): void {
-    const loaded = !!hljs.getLanguage(langId);
-
-    if(!forceLoadSubLang && loaded) {
+  private static loadLanguageWithSubLang(langId: string): void {
+    if(hljs.getLanguage(langId)) {
       return;
     }
 
-    if(!loaded) {
-      console.info(`Code Highlighter: Loading language '${langId}'`);
-      loadHljsLanguageSync(langId);
-    }
+    console.info(`Code Highlighter: Loading language '${langId}'`);
+    loadHljsLanguageSync(langId);
 
     if(!hljs.getLanguage(langId)) {
       console.error(`Code Highlighter: Failed to load language '${langId}'`);
@@ -217,7 +213,7 @@ class Language {
     if(subLangs) {
       for(const subLang of subLangs) {
         console.info(`Code Highlighter: Detected sub-language ID '${subLang}'`);
-        Language.loadLanguageWithSubLang(subLang, false);
+        Language.loadLanguageWithSubLang(subLang);
       }
     }
   }
