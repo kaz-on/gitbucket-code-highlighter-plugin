@@ -49,7 +49,7 @@ function getFileExtension(fileName: string): string {
   return (pos < 0) ? '' : fileName.substring(pos + 1);
 }
 
-function removeThePrefix(text: string, prefix: string): string {
+function removePrefix(text: string, prefix: string): string {
   return text.startsWith(prefix) ? text.substring(prefix.length) : text;
 }
 
@@ -142,7 +142,7 @@ function splitHtmlTagsLineByLine(html: string): string[] {
 //
 
 class Language {
-  readonly id: string | string[];
+  public readonly id: string | string[];
 
   constructor(code:string, langName?: string, fileNameOrUrl?: string) {
     this.id = Language.getId(code, langName, fileNameOrUrl);
@@ -158,10 +158,8 @@ class Language {
   }
 
   private apply(func: (id: string) => void): void {
-    if(this.id) {
-      const ids = Array.isArray(this.id) ? this.id : [this.id];
-      ids.forEach(func);
-    }
+    const ids = Array.isArray(this.id) ? this.id : [this.id];
+    ids.forEach(func);
   }
 
   private static autoDetect(code: string, enable: boolean): string | string[] {
@@ -253,8 +251,8 @@ class Language {
 //
 
 class LineNumber {
-  readonly enable: boolean;
-  readonly start: number;
+  public readonly enable: boolean;
+  public readonly start: number;
 
   constructor(numLines?: number | boolean) {
     if(typeof numLines === 'number') {
@@ -425,7 +423,7 @@ function overrideFunctions(): void {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   prettyPrintOne = function(sourceCodeHtml: string, opt_langExtension?: string, opt_numberLines?: number | boolean): string {
     // Cancel adding a leading newline in gitbucket.js
-    sourceCodeHtml = removeThePrefix(sourceCodeHtml, '\n');
+    sourceCodeHtml = removePrefix(sourceCodeHtml, '\n');
     // Cancel HTML-encoding in gitbucket.js
     sourceCodeHtml = decodeHtml(sourceCodeHtml);
 

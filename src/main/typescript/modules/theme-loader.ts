@@ -43,7 +43,7 @@ function changeCssLink(path: string, fileName: string): void {
 //
 
 class Theme {
-  readonly name: string;
+  public readonly name: string;
 
   constructor(themeName?: string) {
     this.name =
