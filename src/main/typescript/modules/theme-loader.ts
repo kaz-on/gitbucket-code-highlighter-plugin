@@ -1,4 +1,5 @@
 import {hljsThemeList} from './generated/hljs-theme-list';
+import pluginCssText from '../../styles/css/code-highlighter.css';
 
 
 // Global variables
@@ -10,17 +11,25 @@ const defaultThemeGCP = 'github-v2'; // Default theme of google-code-prettify
 // Dynamic CSS Loader
 //
 
-function addCssLink(url: string): void {
-  const linkElem = document.createElement('link');
-  linkElem.rel = 'stylesheet';
-  linkElem.type = 'text/css';
-  linkElem.href = url;
-
+function addCssElement(elem: HTMLLinkElement | HTMLStyleElement): void {
   // Insert a link element before the style element in the document head
   // When there is no style element in the head, it is inserted at the end of the head
   // This enables overrides with user-defined CSS
   const styleElem = document.head.querySelector<HTMLStyleElement>('style[type="text/css"]');
-  document.head.insertBefore(linkElem, styleElem);
+  document.head.insertBefore(elem, styleElem);
+}
+
+function addCssText(cssText: string): void {
+  const styleElem = document.createElement('style');
+  styleElem.textContent = cssText;
+  addCssElement(styleElem);
+}
+
+function addCssLink(url: string): void {
+  const linkElem = document.createElement('link');
+  linkElem.rel = 'stylesheet';
+  linkElem.href = url;
+  addCssElement(linkElem);
 }
 
 function changeCssLink(path: string, fileName: string): void {
@@ -105,7 +114,7 @@ function initializeThemeSelector(pageTheme: PageTheme): void {
 //
 
 export function initializeTheme(): void {
-  addCssLink(`${codeHighlighterAssetsPath}/code-highlighter.css`);
+  addCssText(pluginCssText);
 
   const pageTheme = new PageTheme();
   pageTheme.loadTheme();
