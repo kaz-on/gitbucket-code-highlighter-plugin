@@ -4,6 +4,9 @@ module.exports = {
   mode: 'production', //'development',
   devtool: 'source-map',
   entry: './src/main/typescript/entry.ts',
+  output: {
+    devtoolModuleFilenameTemplate: 'source-map/[resource-path]?[loaders]',
+  },
   module: {
     rules: [
       {
