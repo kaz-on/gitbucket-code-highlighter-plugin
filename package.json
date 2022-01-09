@@ -11,8 +11,8 @@
     "generate:lang-map": "npx ts-node --project ./src/tools/generators/tsconfig.json ./src/tools/generators/generate-lang-alias-map.ts > ./src/main/typescript/modules/generated/hljs-lang-alias-map.ts"
   },
   "dependencies": {
-    "@highlightjs/cdn-assets": "^11.3.1",
-    "highlight.js": "^11.3.1"
+    "@highlightjs/cdn-assets": "^11.4.0",
+    "highlight.js": "^11.4.0"
   },
   "devDependencies": {
     "@types/node": "^14.17.29",

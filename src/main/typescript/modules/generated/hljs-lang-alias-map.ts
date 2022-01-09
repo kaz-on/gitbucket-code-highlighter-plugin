@@ -167,6 +167,7 @@ export const hljsLangAliasMap: Record<string, string | string[]> = {
   "json": "json",
   "julia": "julia",
   "julia-repl": "julia-repl",
+  "jldoctest": "julia-repl",
   "kotlin": "kotlin",
   "kt": "kotlin",
   "kts": "kotlin",

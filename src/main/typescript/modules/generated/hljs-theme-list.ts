@@ -209,6 +209,7 @@ export const hljsThemeList: string[] = [
   "grayscale",
   "hybrid",
   "idea",
+  "intellij-light",
   "ir-black",
   "isbl-editor-dark",
   "isbl-editor-light",
