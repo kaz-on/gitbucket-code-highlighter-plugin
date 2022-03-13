@@ -133,6 +133,8 @@ export const hljsLangAliasMap: Record<string, string | string[]> = {
   "golang": "go",
   "golo": "golo",
   "gradle": "gradle",
+  "graphql": "graphql",
+  "gql": "graphql",
   "groovy": "groovy",
   "haml": "haml",
   "handlebars": "handlebars",
