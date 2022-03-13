@@ -5,6 +5,7 @@
 node_modules/
 
 # sbt specific
+.bsp/
 dist/*
 target/
 lib_managed/
