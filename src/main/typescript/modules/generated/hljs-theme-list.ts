@@ -227,6 +227,8 @@ export const hljsThemeList: string[] = [
   "nnfx-light",
   "nord",
   "obsidian",
+  "panda-syntax-dark",
+  "panda-syntax-light",
   "paraiso-dark",
   "paraiso-light",
   "pojoaque",
