@@ -398,7 +398,7 @@ function highlightCodeBlocks(root: HTMLElement | Document): void {
 //
 
 function overrideFunctions(): void {
-  prettyPrintOne = function(sourceCodeHtml: string, opt_langExtension?: string, opt_numberLines?: number | boolean): string {
+  prettyPrintOne = (sourceCodeHtml: string, opt_langExtension?: string, opt_numberLines?: number | boolean): string => {
     // Cancel adding a leading newline in gitbucket.js
     sourceCodeHtml = removePrefix(sourceCodeHtml, '\n');
     // Cancel HTML-encoding in gitbucket.js
@@ -409,7 +409,7 @@ function overrideFunctions(): void {
 
   originalPrettyPrint = prettyPrint;
 
-  prettyPrint = function(opt_whenDone?: () => void, opt_root?: HTMLElement | Document): void {
+  prettyPrint = (opt_whenDone?: () => void, opt_root?: HTMLElement | Document): void => {
     const root = opt_root || document;
     highlightCodeBlocks(root);
 
