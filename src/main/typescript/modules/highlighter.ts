@@ -13,6 +13,10 @@ const autoDetectWhenUnknownLanguage = true; // Auto-detection when unknown langu
 import hljs from 'highlight.js/lib/core';
 
 
+// Original prettyPrint function
+let originalPrettyPrint: typeof prettyPrint;
+
+
 
 //
 // Helpers
@@ -367,23 +371,24 @@ function detectLineNumber(elem: HTMLElement): LineNumber {
 //
 
 function highlightElement(elem: HTMLElement): void {
-  const isSearchResults = document.querySelector('form input[type="submit"][value="Search"]');
-  if(isSearchResults) {
-    // If it is a search results page, do not highlight and keep HTML tags
-    elem.innerHTML = addHighlightRelatedTags(elem.innerHTML, detectLineNumber(elem));
-  }
-  else {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const code = elem.textContent!; // 'textContent' of 'Element' is not null
-    elem.innerHTML = doHighlight(code, detectLanguageId(code, elem), detectLineNumber(elem));
-  }
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const code = elem.textContent!; // 'textContent' of 'Element' is not null
+  elem.innerHTML = doHighlight(code, detectLanguageId(code, elem), detectLineNumber(elem));
   elem.classList.add('prettyprinted', 'hljs'); // Prevent re-highlighting and apply highlight.js themes
 }
 
 function highlightCodeBlocks(root: HTMLElement | Document): void {
-  const codeBlocks = root.querySelectorAll<HTMLPreElement>('pre.prettyprint:not(.prettyprinted)');
-  for(const codeBlock of codeBlocks) {
-    highlightElement(codeBlock);
+  const isSearchResults = document.querySelector('form input[type="submit"][value="Search"]');
+  if(isSearchResults) {
+    // If it is a search results page, call original prettyPrint function
+    // This is to preserve HTML tags and perform loose auto-detection
+    originalPrettyPrint(undefined, root);
+  }
+  else {
+    const codeBlocks = root.querySelectorAll<HTMLPreElement>('pre.prettyprint:not(.prettyprinted)');
+    for(const codeBlock of codeBlocks) {
+      highlightElement(codeBlock);
+    }
   }
 }
 
@@ -402,6 +407,8 @@ function overrideFunctions(): void {
 
     return doHighlight(sourceCodeHtml, new Language(sourceCodeHtml, opt_langExtension), new LineNumber(opt_numberLines), true);
   }
+
+  originalPrettyPrint = prettyPrint;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   prettyPrint = function(opt_whenDone?: () => void, opt_root?: HTMLElement | Document): void {
