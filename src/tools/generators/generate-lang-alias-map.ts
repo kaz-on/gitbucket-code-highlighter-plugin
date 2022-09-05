@@ -76,6 +76,8 @@ function isUnknownArray(x: unknown): x is unknown[] {
 }
 
 
+const propertySearchDepth = 20;
+
 class PropertyStrings {
   public readonly strings: Set<string>;
 
@@ -86,7 +88,7 @@ class PropertyStrings {
 
   private addPropertyStrings(obj: unknown, key: string, depth?: number): void {
     depth = (typeof depth === 'number') ? ++depth : 0;
-    if(depth > 20) {
+    if(depth > propertySearchDepth) {
       return;
     }
 
