@@ -398,7 +398,6 @@ function highlightCodeBlocks(root: HTMLElement | Document): void {
 //
 
 function overrideFunctions(): void {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   prettyPrintOne = function(sourceCodeHtml: string, opt_langExtension?: string, opt_numberLines?: number | boolean): string {
     // Cancel adding a leading newline in gitbucket.js
     sourceCodeHtml = removePrefix(sourceCodeHtml, '\n');
@@ -410,7 +409,6 @@ function overrideFunctions(): void {
 
   originalPrettyPrint = prettyPrint;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   prettyPrint = function(opt_whenDone?: () => void, opt_root?: HTMLElement | Document): void {
     const root = opt_root || document;
     highlightCodeBlocks(root);
