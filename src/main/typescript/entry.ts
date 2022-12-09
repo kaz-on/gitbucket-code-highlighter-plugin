@@ -6,6 +6,10 @@ import {initializeHighlighting} from './modules/highlighter';
 // Entry Point
 //
 
-initializeTheme();
-
-initializeHighlighting();
+if(typeof prettyPrint === 'function' && typeof prettyPrintOne === 'function') {
+  initializeTheme();
+  initializeHighlighting();
+}
+else {
+  console.error('Code Highlighter: Code-Prettify not found');
+}
