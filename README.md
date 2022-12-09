@@ -33,7 +33,7 @@ Download jar file from the [Releases page](https://github.com/kaz-on/gitbucket-c
 
 ## Build from source
 
-1. Install Node.js, npm, sbt, and JDK 8
+1. Install Node.js, npm, sbt, and JDK
 2. Clone this repository
 3. Run `npm ci`
 4. Run `sbt assembly`

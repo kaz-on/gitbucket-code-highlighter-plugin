@@ -1,8 +1,8 @@
 name := "gitbucket-code-highlighter-plugin"
 organization := "io.github.gitbucket"
 version := "1.6.0"
-scalaVersion := "2.13.8"
-gitbucketVersion := "4.35.3"
+scalaVersion := "2.13.9"
+gitbucketVersion := "4.32.0"
 
 import scala.sys.process._
 

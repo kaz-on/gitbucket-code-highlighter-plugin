@@ -301,6 +301,7 @@ export const hljsLangAliasMap: Record<string, string | string[]> = {
   "sas": "sas",
   "scala": "scala",
   "scheme": "scheme",
+  "scm": "scheme",
   "scilab": "scilab",
   "sci": "scilab",
   "scss": "scss",
