@@ -128,13 +128,10 @@ function addHighlightRelatedTags(code: string, lineNum: LineNumber, avoidSpan?: 
 
   // Add 'ol' and 'li' tags (Imitate google-code-prettify)
 
-  code = lines.map( (codeLine, index) => {
-    let lineValue = '';
-    if(lineNum.start !== 1 && index === 0) {
-      lineValue = `value="${lineNum.start}"`;
-    }
-    return `<li id="L${index + 1}" class="L${index % 10}" ${lineValue}>${codeLine}</li>`;
-  }).join('');
+  code = lines.reduce( (prevLine, currLine, index) => {
+    const lineValue = (lineNum.start !== 1 && index === 0) ? `value="${lineNum.start}"` : '';
+    return prevLine + `<li id="L${index + 1}" class="L${index % 10}" ${lineValue}>${currLine}</li>`;
+  }, '');
 
   return `<ol class="linenums">${code}</ol>`;
 }

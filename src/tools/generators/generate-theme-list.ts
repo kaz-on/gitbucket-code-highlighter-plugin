@@ -16,7 +16,7 @@ class FileList {
     this.files.sort();
   }
 
-  toString(): string {
+  public toString(): string {
     return JSON.stringify(this.files, null, 2);
   }
 
@@ -62,4 +62,4 @@ process.stdout.write('// To generate this file, type `npm run generate` in a ter
 process.stdout.write('\n');
 process.stdout.write('export const hljsThemeList: string[] = ');
 process.stdout.write(themeFiles.toString());
-process.stdout.write(';');
+process.stdout.write(';\n');

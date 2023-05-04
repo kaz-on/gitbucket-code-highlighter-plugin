@@ -19,7 +19,7 @@ class LanguageAliasMap {
     this.addLanguages();
   }
 
-  toString(): string {
+  public toString(): string {
     return JSON.stringify(this.langMap, null, 2);
   }
 
@@ -92,7 +92,7 @@ class PropertyStrings {
   }
 
   private addPropertyStrings(obj: unknown, key: string, depth?: number): void {
-    depth = (typeof depth === 'number') ? ++depth : 0;
+    depth = (typeof depth === 'number') ? depth + 1 : 0;
     if(depth > propertySearchDepth) {
       return;
     }
@@ -140,7 +140,7 @@ class SubLanguageMap {
     this.addSubLanguages('subLanguage');
   }
 
-  toString(): string {
+  public toString(): string {
     return JSON.stringify(this.subLangMap, null, 2);
   }
 
