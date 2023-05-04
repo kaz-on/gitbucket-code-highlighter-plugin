@@ -81,7 +81,7 @@ class LineNumber {
 //
 
 function hljsHighlight(code: string, lang: Language): string {
-  lang.loadLanguage();
+  lang.load();
 
   try {
     let result;

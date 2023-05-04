@@ -35,101 +35,104 @@ function loadHljsLanguageSync(langId: string): void {
 // Language Loader
 //
 
+function autoDetect(code: string, enable: boolean): string | string[] {
+  // Auto-detection in Hightlight.js often takes a long time,
+  // so use the plugin's own auto-detection
+
+  if(!enable) {
+    return 'plaintext';
+  }
+
+  if(code.startsWith('<')) {
+    return 'xml';
+  }
+
+  if(code.startsWith('{')) {
+    return 'json';
+  }
+
+  return [
+    'bash',
+    'ini',
+    'javascript',
+  ];
+}
+
+function getLanguageId(code: string, langName: string | undefined, fileNameOrUrl: string | undefined): string | string[] {
+  const useFileName = prioritizeFileName || !langName;
+
+  if(useFileName && fileNameOrUrl) {
+    let fileName = getFileName(fileNameOrUrl);
+
+    console.info(`Code Highlighter: Detected file name '${fileName}'`)
+
+    fileName = fileName.toLowerCase();
+    langName = getRecordValue(fileNameMap, fileName) ?? getFileExtension(fileName);
+    if(!langName) {
+      return autoDetect(code, autoDetectWhenNoExtension);
+    }
+  }
+
+  if(!langName) {
+    return autoDetect(code, autoDetectWhenNoLanguage);
+  }
+
+  console.info(`Code Highlighter: Detected language name '${langName}'`)
+
+  langName = langName.toLowerCase();
+  langName = getRecordValueOr(langNameMap, langName, langName);
+
+  const langId = getRecordValue(hljsLangAliasMap, langName);
+  if(!langId) {
+    return autoDetect(code, autoDetectWhenUnknownLanguage);
+  }
+
+  return langId;
+}
+
+function loadLanguageWithSubLang(langId: string): void {
+  if(hljs.getLanguage(langId)) {
+    return;
+  }
+
+  console.info(`Code Highlighter: Loading language '${langId}'`);
+  loadHljsLanguageSync(langId);
+
+  if(!hljs.getLanguage(langId)) {
+    console.error(`Code Highlighter: Failed to load language '${langId}'`);
+    return;
+  }
+
+  const subLangs = getRecordValue(hljsSubLangMap, langId);
+  if(subLangs) {
+    for(const subLang of subLangs) {
+      console.info(`Code Highlighter: Detected sub-language ID '${subLang}'`);
+      loadLanguageWithSubLang(subLang);
+    }
+  }
+}
+
+
+//
+// Language Class
+//
+
 export class Language {
   public readonly id: string | string[];
 
   constructor(code:string, langName?: string, fileNameOrUrl?: string) {
-    this.id = Language.getId(code, langName, fileNameOrUrl);
+    this.id = getLanguageId(code, langName, fileNameOrUrl);
     this.apply(id =>
       console.info(`Code Highlighter: Detected language ID '${id}'`)
     );
   }
 
-  loadLanguage(): void {
-    this.apply(id =>
-      Language.loadLanguageWithSubLang(id)
-    );
+  load(): void {
+    this.apply(loadLanguageWithSubLang);
   }
 
   private apply(func: (id: string) => void): void {
     const ids = Array.isArray(this.id) ? this.id : [this.id];
     ids.forEach(func);
-  }
-
-  private static autoDetect(code: string, enable: boolean): string | string[] {
-    // Auto-detection in Hightlight.js often takes a long time,
-    // so use the plugin's own auto-detection
-
-    if(!enable) {
-      return 'plaintext';
-    }
-
-    if(code.startsWith('<')) {
-      return 'xml';
-    }
-
-    if(code.startsWith('{')) {
-      return 'json';
-    }
-
-    return [
-      'bash',
-      'ini',
-      'javascript',
-    ];
-  }
-
-  private static getId(code: string, langName: string | undefined, fileNameOrUrl: string | undefined): string | string[] {
-    const useFileName = prioritizeFileName || !langName;
-
-    if(useFileName && fileNameOrUrl) {
-      let fileName = getFileName(fileNameOrUrl);
-
-      console.info(`Code Highlighter: Detected file name '${fileName}'`)
-
-      fileName = fileName.toLowerCase();
-      langName = getRecordValue(fileNameMap, fileName) ?? getFileExtension(fileName);
-      if(!langName) {
-        return Language.autoDetect(code, autoDetectWhenNoExtension);
-      }
-    }
-
-    if(!langName) {
-      return Language.autoDetect(code, autoDetectWhenNoLanguage);
-    }
-
-    console.info(`Code Highlighter: Detected language name '${langName}'`)
-
-    langName = langName.toLowerCase();
-    langName = getRecordValueOr(langNameMap, langName, langName);
-
-    const langId = getRecordValue(hljsLangAliasMap, langName);
-    if(!langId) {
-      return Language.autoDetect(code, autoDetectWhenUnknownLanguage);
-    }
-
-    return langId;
-  }
-
-  private static loadLanguageWithSubLang(langId: string): void {
-    if(hljs.getLanguage(langId)) {
-      return;
-    }
-
-    console.info(`Code Highlighter: Loading language '${langId}'`);
-    loadHljsLanguageSync(langId);
-
-    if(!hljs.getLanguage(langId)) {
-      console.error(`Code Highlighter: Failed to load language '${langId}'`);
-      return;
-    }
-
-    const subLangs = getRecordValue(hljsSubLangMap, langId);
-    if(subLangs) {
-      for(const subLang of subLangs) {
-        console.info(`Code Highlighter: Detected sub-language ID '${subLang}'`);
-        Language.loadLanguageWithSubLang(subLang);
-      }
-    }
   }
 }

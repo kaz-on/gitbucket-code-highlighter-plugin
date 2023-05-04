@@ -20,21 +20,15 @@ class Theme {
       (themeName && hljsThemeList.includes(themeName)) ? themeName : defaultThemeHLjs;
   }
 
-  loadTheme(): void {
+  load(): void {
     changeCssLink(`${codeHighlighterHljsPath}/styles/`, `${this.name}.min.css`);
   }
 }
 
-class PageTheme extends Theme {
-  constructor() {
-    super(PageTheme.getName());
-  }
-
-  private static getName(): string | undefined {
-    const linkElem = document.querySelector<HTMLLinkElement>('link[rel="stylesheet"][href*="/color-themes-for-google-code-prettify/"]');
-    const match = linkElem?.href.match(/\/color-themes-for-google-code-prettify\/([^.]+)\.min\.css/);
-    return match?.[1];
-  }
+function getPageThemeName(): string | undefined {
+  const linkElem = document.querySelector<HTMLLinkElement>('link[rel="stylesheet"][href*="/color-themes-for-google-code-prettify/"]');
+  const match = linkElem?.href.match(/\/color-themes-for-google-code-prettify\/([^.]+)\.min\.css/);
+  return match?.[1];
 }
 
 
@@ -42,7 +36,7 @@ class PageTheme extends Theme {
 // Theme Selector Patcher
 //
 
-function initializeThemeSelector(pageTheme: PageTheme): void {
+function initializeThemeSelector(pageTheme: Theme): void {
   // Get the 'select' element of the theme selector if it exists
   const selectElem = document.querySelector<HTMLSelectElement>('select#highlighterTheme');
   if(!selectElem) {
@@ -65,7 +59,7 @@ function initializeThemeSelector(pageTheme: PageTheme): void {
   // Register an event listener
   selectElem.addEventListener('change', function() {
     const selectedTheme = new Theme(this.value);
-    selectedTheme.loadTheme();
+    selectedTheme.load();
   });
 
   // Add language class for better preview
@@ -81,8 +75,8 @@ function initializeThemeSelector(pageTheme: PageTheme): void {
 export function initializeTheme(): void {
   addCssText(pluginCssText);
 
-  const pageTheme = new PageTheme();
-  pageTheme.loadTheme();
+  const pageTheme = new Theme(getPageThemeName());
+  pageTheme.load();
 
   initializeThemeSelector(pageTheme);
 }
