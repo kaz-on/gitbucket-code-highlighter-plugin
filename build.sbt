@@ -4,6 +4,8 @@ version := "1.7.0"
 scalaVersion := "2.13.10"
 gitbucketVersion := "4.39.0"
 
+ThisBuild / packageTimestamp := Package.gitCommitDateTimestamp
+
 import scala.sys.process._
 
 def BuildCommand(command: Seq[String]): Seq[String] = {
