@@ -1,6 +1,8 @@
-const ESLintPlugin = require('eslint-webpack-plugin');
+import webpack from 'webpack';
+import ESLintPlugin from 'eslint-webpack-plugin';
 
-module.exports = {
+
+const config: webpack.Configuration = {
   mode: 'production', //'development',
   devtool: 'source-map',
   entry: './src/main/typescript/entry.ts',
@@ -38,3 +40,6 @@ module.exports = {
     })
   ],
 };
+
+
+export default config;
