@@ -62,3 +62,12 @@ Compile / resourceGenerators += Def.task {
   val finder: PathFinder = (outDir ** "*") filter { _.isFile }
   finder.get
 }.taskValue
+
+// Disable renaming of readme and license files
+ThisBuild / assemblyMergeStrategy := {
+  case PathList(ps @ _*) if Assembly.isReadme(ps.last) || Assembly.isLicenseFile(ps.last) =>
+    MergeStrategy.deduplicate
+  case x =>
+    val oldStrategy = (ThisBuild / assemblyMergeStrategy).value
+    oldStrategy(x)
+}
