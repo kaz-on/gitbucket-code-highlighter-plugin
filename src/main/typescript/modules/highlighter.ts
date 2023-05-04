@@ -14,14 +14,13 @@ function splitHtmlTagsLineByLine(html: string): string[] {
   const openedTags: string[] = [];
   const closingTags: string[] = [];
 
-  let index = 0;
+  let lineStartIndex = 0;
   let unclosedTags = '';
   const lines: string[] = [];
 
-  const re = new RegExp(/<\/?(\w+)[^>]*>|\n|\r\n?/g);
-  let match;
+  const matches = html.matchAll(/<\/?(\w+)[^>]*>|\n|\r\n?/g);
 
-  while((match = re.exec(html))) {
+  for(const match of matches) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const matched = match[0]!; // 'match[0]' is always defined
 
@@ -40,14 +39,15 @@ function splitHtmlTagsLineByLine(html: string): string[] {
     }
     else {
       // End of the line
-      lines.push(unclosedTags + html.substring(index, match.index) + closingTags.join(''));
-      index = re.lastIndex;
+      lines.push(unclosedTags + html.substring(lineStartIndex, match.index) + closingTags.join(''));
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      lineStartIndex = match.index! + matched.length; // 'match.index' is always defined
       unclosedTags = openedTags.join('');
     }
   }
 
   // Last line
-  lines.push(unclosedTags + html.substring(index));
+  lines.push(unclosedTags + html.substring(lineStartIndex));
 
   console.assert(closingTags.length === 0, 'splitHtmlTagsLineByLine: Too few closing tags');
 
