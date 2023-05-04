@@ -6,6 +6,11 @@
 import hljs from 'highlight.js';
 
 
+function listLanguageIdTypes(): string {
+  return hljs.listLanguages().map(x => `  "${x}"`).join(' |\n');
+}
+
+
 class LanguageAliasMap {
   private readonly langMap: Record<string, string | string[]>;
 
@@ -166,10 +171,14 @@ process.stdout.write('// ** DO NOT MODIFY **\n');
 process.stdout.write('// This file is auto-generated.\n');
 process.stdout.write('// To generate this file, type `npm run generate` in a terminal.\n');
 process.stdout.write('\n');
-process.stdout.write('export const hljsLangAliasMap: Record<string, string | string[]> = ');
+process.stdout.write('export type HljsLangID =\n');
+process.stdout.write(listLanguageIdTypes());
+process.stdout.write(';\n');
+process.stdout.write('\n');
+process.stdout.write('export const hljsLangAliasMap: Record<string, HljsLangID | HljsLangID[]> = ');
 process.stdout.write(langMap.toString());
 process.stdout.write(';\n');
 process.stdout.write('\n');
-process.stdout.write('export const hljsSubLangMap: Record<string, string[]> = ');
+process.stdout.write('export const hljsSubLangMap: Record<string, HljsLangID[]> = ');
 process.stdout.write(subLangMap.toString());
 process.stdout.write(';\n');
