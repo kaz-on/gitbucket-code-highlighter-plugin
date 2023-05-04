@@ -457,6 +457,7 @@ export const hljsLangAliasMap: Record<string, HljsLangID | HljsLangID[]> = {
   "prolog": "prolog",
   "properties": "properties",
   "protobuf": "protobuf",
+  "proto": "protobuf",
   "puppet": "puppet",
   "pp": "puppet",
   "purebasic": "purebasic",
@@ -530,6 +531,8 @@ export const hljsLangAliasMap: Record<string, HljsLangID | HljsLangID[]> = {
   "twig": "twig",
   "craftcms": "twig",
   "typescript": "typescript",
+  "cts": "typescript",
+  "mts": "typescript",
   "ts": "typescript",
   "tsx": "typescript",
   "vala": "vala",
@@ -608,7 +611,8 @@ export const hljsSubLangMap: Record<string, HljsLangID[]> = {
   ],
   "javascript": [
     "xml",
-    "css"
+    "css",
+    "graphql"
   ],
   "julia-repl": [
     "julia"
@@ -667,7 +671,8 @@ export const hljsSubLangMap: Record<string, HljsLangID[]> = {
   ],
   "typescript": [
     "xml",
-    "css"
+    "css",
+    "graphql"
   ],
   "vbscript-html": [
     "xml",
